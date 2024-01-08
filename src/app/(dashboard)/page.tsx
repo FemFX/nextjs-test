@@ -35,7 +35,7 @@ const DashboardPage = () => {
         новых вершин в учебном процессе.
       </div>
       <Button className="mt-6" size="lg" asChild>
-        <Link href="/sign-up">Перейти к курсам</Link>
+        <Link href="/sign-up">Перейти к задачам</Link>
       </Button>
     </div>
   );
