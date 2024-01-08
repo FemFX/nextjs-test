@@ -11,7 +11,7 @@ export default authMiddleware({
     req: Request
   ) {
     if (auth.userId && auth.isPublicRoute) {
-      return NextResponse.redirect(new URL("/courses", req.url));
+      return NextResponse.redirect(new URL("/lessons", req.url));
     }
   },
 });
