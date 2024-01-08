@@ -6,12 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docker:up": "docker-compose -f ./docker/postgres/docker-compose.yml up -d",
+    "docker:down": "docker-compose -f ./docker/postgres/docker-compose.yml down"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.2",
     "@prisma/client": "^5.7.1",
     "@radix-ui/react-slot": "^1.0.2",
+    "@tanstack/react-query": "^5.17.9",
+    "@tanstack/react-table": "^8.11.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.307.0",
