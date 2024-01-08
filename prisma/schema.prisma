@@ -12,8 +12,9 @@ datasource db {
 }
 
 model Lesson {
-  id   String @id @default(uuid())
-  task String
+  id    String @id @default(uuid())
+  title String
+  task  String
 
   attempts    Attempt[]
   submissions Submission[]
