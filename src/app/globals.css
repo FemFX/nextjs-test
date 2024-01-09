@@ -9,6 +9,10 @@ body,
   background-color: rgb(241 245 249);
 }
 
+.editor {
+  width: 100% !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

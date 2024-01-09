@@ -12,6 +12,7 @@ export async function GET(
 ) {
   try {
     const user = await currentUser();
+
     if (!params.lessonId) {
       return new NextResponse("Lesson ID missing", { status: 400 });
     }
@@ -23,7 +24,7 @@ export async function GET(
     const lesson = await db.lesson.findUnique({
       where: { id: params.lessonId },
       include: {
-        attempts: {
+        submissions: {
           where: { userId: user.id },
         },
       },
