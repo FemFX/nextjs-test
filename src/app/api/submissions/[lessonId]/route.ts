@@ -1,7 +1,7 @@
-import { db } from "@/lib/db";
-import { getRandomBoolean } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { db } from "@/lib/db";
+import { getRandomBoolean } from "@/lib/utils";
 
 export async function POST(
   req: Request,
