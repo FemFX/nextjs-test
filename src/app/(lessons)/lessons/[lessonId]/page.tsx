@@ -1,51 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import { Lesson, Submission } from "@prisma/client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Submission } from "@prisma/client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Editor from "@/components/editor";
 import { useToast } from "@/components/ui/use-toast";
-
-type LessonWithSubmissions = Lesson & { submissions: Submission[] };
+import { useLessonQuery } from "@/hooks/use-lesson-query";
+import { useLessonMutation } from "@/hooks/use-lesson-mutation";
 
 const LessonPage = ({ params }: { params: { lessonId: string } }) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [value, setValue] = useState<string>("");
 
-  const { data, isLoading, error } = useQuery<{
-    lesson: LessonWithSubmissions;
-  }>({
-    queryKey: ["lesson", params.lessonId],
-    queryFn: async ({ queryKey }) => {
-      const { data } = await axios.get(
-        `${process.env.NEXT_PUBLIC_URL}/api/lessons/${queryKey[1]}`
-      );
-      return data;
-    },
-  });
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (lessonId: string) => {
-      const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_URL}/api/submissions/${lessonId}`
-      );
-      return data;
-    },
-    onSuccess: ({ submission }: { submission: Submission }) => {
-      toast({
-        title: data?.lesson.title,
-        description: `${submission.result}`,
-      });
-      queryClient.invalidateQueries({ queryKey: ["lesson", params.lessonId] });
-    },
-  });
+  const { data, isLoading, error } = useLessonQuery(params.lessonId);
+  const { mutate, isPending } = useLessonMutation(
+    data?.lesson.title!,
+    params.lessonId
+  );
 
   const handleSubmit = async () => {
     try {
-      await mutate(params.lessonId);
+      await mutate();
       setValue("");
     } catch (err) {
       console.log(err);
