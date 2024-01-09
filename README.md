@@ -1,36 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[Project preview](https://www.youtube.com/watch?v=twVhf26uobE&ab_channel=%D0%98%D0%B2%D0%B0%D0%BD%D0%93%D0%BD%D0%B5%D0%B4%D1%8C%D0%BA%D0%BE)
 
-## Getting Started
+Реализовал весь необходимый функционал изложенный в ТЗ и немного добавил дополнительного функционала от себя.
 
-First, run the development server:
+Стек: Next.js 14 с App router, React, Typescript, Tailwind, Clerk, Prisma, Postgresql(разворачивал при помощи Docker), Shadcn Ui, Toaster, React Query,Tanstack Table, React Ace
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+В приложение есть несколько страниц: главная, страница уроков(задач), старница одной задачи, авторизация/реигстрация, реализованы приватные роуты, и так же авторизованный пользователь не может попасть на главную, страницы авторизации/регистрации, после выхода из аккаунта пользователь перебрасывается на главную
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Для организации струтруы страниц использовал Route Groups для создания гибких layout для каждой группы роутов
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Использовал Prisma и Potsgresql, описал 2 модели Lesson(сама задача) и Submission(отправленное решение, для каждого пользователя уникально), есть несколько миграций
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Использовал react query, так как на мой взгляд он здесь будет более удобным и выгодным, нежели redux
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+После авторизации пользователь попадает на страницу /lessons, данные получаются при помощи RSC(React Server Components) по /api/lessons, и выводятся в виде таблицы в возможностью пагинации при помощи Tanstack table, при клине на любое из полей таблицы пользователь переходит на /lessons/{lessonId} данные получаются при помощью React query с /api/lessons/{lessonsId}, данные приходят с 2-х секундной задержкой, пока данных нет, пользователь видит анимированный spinner, при отправки данных(react query mutation), в ответ пользователь получает toaster уведомление с результатом true/false, также данные о количестве попыток автоматически обновляются без перезагрузки страницы
