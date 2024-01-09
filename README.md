@@ -1,4 +1,4 @@
-[Project preview](https://www.youtube.com/watch?v=twVhf26uobE&ab_channel=%D0%98%D0%B2%D0%B0%D0%BD%D0%93%D0%BD%D0%B5%D0%B4%D1%8C%D0%BA%D0%BE)
+[Ссылка на видео с демонстрацией проекта](https://www.youtube.com/watch?v=twVhf26uobE&ab_channel=%D0%98%D0%B2%D0%B0%D0%BD%D0%93%D0%BD%D0%B5%D0%B4%D1%8C%D0%BA%D0%BE)
 
 Реализовал весь необходимый функционал изложенный в ТЗ и немного добавил дополнительного функционала от себя.
 
