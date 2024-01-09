@@ -1,5 +1,5 @@
-import { DataTable } from "@/components/data-table";
 import { Lesson } from "@prisma/client";
+import { DataTable } from "@/components/data-table";
 
 async function getLessons(): Promise<{ lessons: Lesson[] }> {
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/lessons`);
@@ -16,7 +16,9 @@ const LessonsPage = async () => {
 
   return (
     <div>
-      <div className="font-bold mb-4 text-xl">Задачи</div>
+      <div className="font-bold mb-4 text-xl text-center sm:text-start">
+        Задачи
+      </div>
       <DataTable data={lessons} />
     </div>
   );

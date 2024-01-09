@@ -10,9 +10,12 @@ export type Payment = {
 export const columns: ColumnDef<Payment>[] = [
   {
     accessorKey: "id",
-    header: "Id",
+    header: () => <span className="hidden sm:flex">Id</span>,
     cell: ({ row }) => (
-      <Link href={`/lessons/${row.getValue("id")}`} className="capitalize">
+      <Link
+        href={`/lessons/${row.getValue("id")}`}
+        className="capitalize hidden sm:flex"
+      >
         {row.getValue("id")}
       </Link>
     ),

@@ -22,8 +22,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { columns } from "./columns";
+import { Lesson } from "@prisma/client";
 
-export function DataTable({ data }: { data: any }) {
+export function DataTable({ data }: { data: Lesson[] }) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

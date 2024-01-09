@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { Lesson, Submission } from "@prisma/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Editor from "@/components/editor";
-import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
 type LessonWithSubmissions = Lesson & { submissions: Submission[] };
