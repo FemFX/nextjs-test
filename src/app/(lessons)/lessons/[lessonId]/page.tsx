@@ -1,19 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Submission } from "@prisma/client";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Editor from "@/components/editor";
-import { useToast } from "@/components/ui/use-toast";
 import { useLessonQuery } from "@/hooks/use-lesson-query";
 import { useLessonMutation } from "@/hooks/use-lesson-mutation";
 
 const LessonPage = ({ params }: { params: { lessonId: string } }) => {
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
   const [value, setValue] = useState<string>("");
 
   const { data, isLoading, error } = useLessonQuery(params.lessonId);
