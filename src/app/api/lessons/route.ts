@@ -1,18 +1,16 @@
-import { auth, currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { LessonsService } from "@/services/lessons.service";
 
 export async function GET(req: Request) {
   try {
-    const user = await currentUser();
-
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-    const lessons = await db.lesson.findMany({});
+    const lessons = await LessonsService.getAll();
 
     return NextResponse.json({ lessons });
-  } catch (err) {
+  } catch (error: unknown) {
+    const err = error as Error;
+    if (err.message === "Unauthorized") {
+      return new NextResponse(err.message, { status: 401 });
+    }
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

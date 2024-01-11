@@ -1,7 +1,5 @@
-import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
-import { getRandomBoolean } from "@/lib/utils";
+import { SubmissionsService } from "@/services/submissions.service";
 
 export async function POST(
   req: Request,
@@ -12,25 +10,17 @@ export async function POST(
   }
 ) {
   try {
-    const user = await currentUser();
-
-    if (!params.lessonId) {
-      return new NextResponse("Lesson ID missing", { status: 400 });
-    }
-
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-    const submission = await db.submission.create({
-      data: {
-        result: getRandomBoolean(),
-        userId: user.id,
-        lessonId: params.lessonId,
-      },
-    });
+    const submission = await SubmissionsService.create(params.lessonId);
 
     return NextResponse.json({ submission });
-  } catch (err) {
+  } catch (error: unknown) {
+    const err = error as Error;
+    if (err.message === "Unauthorized") {
+      return new NextResponse(err.message, { status: 401 });
+    }
+    if (err.message === "Lesson ID missing") {
+      return new NextResponse(err.message, { status: 400 });
+    }
     return new NextResponse("Internal Error", { status: 500 });
   }
 }

@@ -1,6 +1,5 @@
-import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import { LessonsService } from "@/services/lessons.service";
 
 export async function GET(
   req: Request,
@@ -11,29 +10,17 @@ export async function GET(
   }
 ) {
   try {
-    const user = await currentUser();
-
-    if (!params.lessonId) {
-      return new NextResponse("Lesson ID missing", { status: 400 });
-    }
-
-    if (!user) {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
-
-    const lesson = await db.lesson.findUnique({
-      where: { id: params.lessonId },
-      include: {
-        submissions: {
-          where: { userId: user.id },
-        },
-      },
-    });
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const lesson = await LessonsService.getOne(params.lessonId);
 
     return NextResponse.json({ lesson });
-  } catch (err) {
+  } catch (error) {
+    const err = error as Error;
+    if (err.message === "Unauthorized") {
+      return new NextResponse(err.message, { status: 401 });
+    }
+    if (err.message === "Lesson ID missing") {
+      return new NextResponse(err.message, { status: 400 });
+    }
     return new NextResponse("Internal Error", { status: 500 });
   }
 }
