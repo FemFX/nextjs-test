@@ -1,8 +1,6 @@
-import { Lesson, Submission } from "@prisma/client";
+import { LessonWithSubmissions } from "@/services/lessons.service";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-type LessonWithSubmissions = Lesson & { submissions: Submission[] };
 
 export const useLessonQuery = (lessonId: string) => {
   return useQuery<{
