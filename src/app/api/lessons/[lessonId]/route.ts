@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { LessonsService } from "@/services/lessons.service";
+import { handleErrorResponse } from "@/lib/error-handler";
 
 export async function GET(
   req: Request,
@@ -14,13 +15,6 @@ export async function GET(
 
     return NextResponse.json({ lesson });
   } catch (error) {
-    const err = error as Error;
-    if (err.message === "Unauthorized") {
-      return new NextResponse(err.message, { status: 401 });
-    }
-    if (err.message === "Lesson ID missing") {
-      return new NextResponse(err.message, { status: 400 });
-    }
-    return new NextResponse("Internal Error", { status: 500 });
+    return handleErrorResponse(error);
   }
 }
