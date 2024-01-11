@@ -24,7 +24,6 @@ export class LessonsService {
     if (!user) {
       throw new Error("Unauthorized");
     }
-    console.log(lessonId);
 
     const lesson = await db.lesson.findUnique({
       where: { id: lessonId },
